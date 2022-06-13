@@ -6,10 +6,12 @@
 #   Description : Stock extrapolation using Long Short Term Memory (LSTM) to create a graphical   #
 #                 prediction of stock closing price.                                              #
 ###################################################################################################
+from urllib import response
 import numpy
 import pandas
 import math 
 import datetime
+import requests 
 import urllib.request
 import pandas_datareader as web # install current version using 'pip install pandas-datareader'
 import numpy as np 
@@ -33,20 +35,51 @@ def  dateValid(date):
         datetime.datetime.strptime(date_string, format)
     # Quits if the date format is incorrect.
     except ValueError:
-        print("Data must be of form: (yyyy-mm-dd)")
+        print("Error: data must be of form: (yyyy-mm-dd)")
         quit()
 
 # Gets user information for stock extrapolation.
-stockName = input("Enter a stock to extrapolate: ")
+stockName = input("\nEnter a stock to extrapolate: ")
 startDate = input("Enter start date (yyyy-mm-dd): ")
 dateValid(startDate)
 endDate = input("Enter an end date (yyyy-mm-dd): ")
 dateValid(endDate)
+print('\n*********************************************************************************\n')
 
-# Prints the data to screen between given dates. 
-data = load_iris()
+# Prints the dataframe to screen between given dates. 
+load_data = load_iris()
 df = web.DataReader(stockName, data_source='yahoo', start=startDate, end=endDate);
 display(df)
 
-# start : 2012-01-05
-# end : 2019-01-04
+# Visualize closing price history.
+plt.figure(figsize=(16,8))
+plt.title('Close Price History')
+plt.plot(df['Close'], color="green")
+plt.xlabel('Date', fontsize=18)
+plt.ylabel('Close Price USD ($)', fontsize=18)
+plt.show()
+
+# Create new dataframe for closing.
+data = df.filter(['Close'])
+
+# Convert the dataframe to numpy array.
+dataset = data.values
+
+# Get number of rows.
+training_data_len = math.ceil(len(dataset) * 0.80)
+
+# Scaling data.
+scaler = MinMaxScaler(feature_range=(0,1))
+scaled_data = scaler.fit_transform(dataset)   #! Watch for possible errors around data here (surrounding the input for this).
+#print(scaled_data)
+
+# Create the training dataset and scaled trainging dataset.
+train_data = scaled_data[0:training_data_len:]
+
+# Split data into x_train and y_train.
+x_train = []
+y_train = []
+
+for i in range(60, len(train_data)):
+    x_train.append(train_data[i-60, 0])
+    y_train.append(train_data[i, 0])
