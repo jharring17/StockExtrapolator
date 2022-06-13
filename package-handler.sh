@@ -7,7 +7,7 @@
 ###################################################################################################
 #!/bin/bash
 
-LIST_OF_LIBS="numpy pandas scikit-learn keras matplotlib"
+LIST_OF_LIBS="numpy pandas scikit-learn keras matplotlib tensorflow IPython pandas-reader datetime"
 
 sudo apt-get update
 pip install $LIST_OF_LIBS
