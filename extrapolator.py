@@ -26,7 +26,7 @@ plt.style.use('fivethirtyeight')
 def  dateValid(date): 
     #  Sets date format.
     date_string = date
-    format = "%Y-%m-d"
+    format = "%Y-%m-%d"
     
     # Checks the validity of the time format.
     try:
