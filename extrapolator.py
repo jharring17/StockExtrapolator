@@ -44,7 +44,7 @@ startDate = input("Enter start date (yyyy-mm-dd): ")
 dateValid(startDate)
 endDate = input("Enter an end date (yyyy-mm-dd): ")
 dateValid(endDate)
-print('\n*********************************************************************************\n')
+print('\n')
 
 # Prints the dataframe to screen between given dates. 
 load_data = load_iris()
