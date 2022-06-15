@@ -16,6 +16,7 @@ import urllib.request
 import pandas_datareader as web # install current version using 'pip install pandas-datareader'
 import numpy as np 
 import pandas as pd
+import requests
 from sklearn.preprocessing import MinMaxScaler # install current version using 'pip install scikit-learn'
 from sklearn.datasets import load_iris
 from keras.models import Sequential 
@@ -38,8 +39,21 @@ def  dateValid(date):
         print("Error: data must be of form: (yyyy-mm-dd)")
         quit()
 
+
+def  stockValid(stockName): 
+    #Queries yahoo finance url for given stock.
+    stockURL = 'http://www.finance.yahoo.com/quote/' + stockName
+    response = requests.get(stockURL)
+    #Quits program if page not found (invalid stock name).
+    if response.status_code != 200:
+        print("Error: stock does not exist")
+        quit()
+
+
+
 # Gets user information for stock extrapolation.
 stockName = input("\nEnter a stock to extrapolate: ")
+stockValid(stockName)
 startDate = input("Enter start date (yyyy-mm-dd): ")
 dateValid(startDate)
 endDate = input("Enter an end date (yyyy-mm-dd): ")
