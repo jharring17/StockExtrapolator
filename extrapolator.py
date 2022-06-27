@@ -13,11 +13,11 @@ import math
 import datetime
 import requests 
 import urllib.request
-import pandas_datareader as web # install current version using 'pip install pandas-datareader'
+import pandas_datareader as web 
 import numpy as np 
 import pandas as pd
 import requests
-from sklearn.preprocessing import MinMaxScaler # install current version using 'pip install scikit-learn'
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.datasets import load_iris
 from keras.models import Sequential 
 from keras.layers import Dense, LSTM 
